@@ -1,0 +1,19 @@
+name: dart_server
+description: A sample command-line application.
+version: 1.0.0
+repository: https://github.com/Francisperalta05/DartServer
+
+environment:
+  sdk: '>=3.4.4 <4.0.0'
+
+# dart run build_runner build --delete-conflicting-outputs
+# Add regular dependencies here.
+dependencies:
+  args: ^2.5.0
+  shelf: ^1.4.2
+  shelf_swagger_ui: ^1.0.0+2
+ 
+
+dev_dependencies:
+  lints: ^4.0.0
+  test: ^1.24.0
