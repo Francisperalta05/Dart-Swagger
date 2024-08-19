@@ -10,6 +10,7 @@ environment:
 # Add regular dependencies here.
 dependencies:
   args: ^2.5.0
+  build_runner: ^2.4.11
   shelf: ^1.4.2
   shelf_swagger_ui: ^1.0.0+2
  
