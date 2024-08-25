@@ -1,48 +1,53 @@
 openapi: 3.0.0
 info:
   description: "API system"
-  version: "1.0.0"
-  title: "Swagger Monedero 1"
+  version: "1.0.10"
+  title: "Swagger Test"
 servers:
-  - url: https://monedero-server-5ff8e217324e.herokuapp.com/api/v1
+  - url: http://my-service.info
     description: Remote server
+tags:
+- name: "user"
+  description: "Access to User"
+- name: "project"
+  description: "Access to project"
 
 paths:
-  /loginUser:
-    post:
+  /user/{id}:
+    get:
       tags:
-      - "login"
-      summary: "Login user"
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/LoginEntity"
+      - "user"
+      security:
+        - bearerAuth: [] 
+      summary: "get user by id"
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            minimum: 1
+          description: The user ID
       responses:
         "200":
           description: "successful operation"
           content:
             application/json:
               schema:
-                items:
-                  $ref: "#/components/schemas/LoginEntity"
-        "401":
-          $ref: '#/components/responses/Unauthorized'
+                $ref: "#/components/schemas/UserEntity"
         "403":
           $ref: '#/components/responses/Unauthorized'
         "404":
           $ref: '#/components/responses/NotFound'
         "500":
           $ref: '#/components/responses/InternalError'
-
-  /users:
+  /user:
     get:
       tags:
-      - "users"
+      - "user"
       security:
         - bearerAuth: [] 
-      summary: "Get all user"
+      summary: "get all user"
       responses:
         "200":
           description: "successful operation"
@@ -58,33 +63,62 @@ paths:
           $ref: '#/components/responses/NotFound'
         "500":
           $ref: '#/components/responses/InternalError'
-
-  /items:
-    get:
+    post:
       tags:
-      - "items"
+      - "user"
       security:
         - bearerAuth: [] 
-      summary: "Get all item"
+      summary: "Create a use"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserEntity"
+              
       responses:
         "200":
           description: "successful operation"
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/ItemEntity"
+                $ref: "#/components/schemas/UserEntity"
         "403":
           $ref: '#/components/responses/Unauthorized'
         "404":
           $ref: '#/components/responses/NotFound'
         "500":
           $ref: '#/components/responses/InternalError'
-
+    put:
+      tags:
+      - "user"
+      security:
+        - bearerAuth: [] 
+      summary: "Update a use"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserEntity"
+              
+      responses:
+        "200":
+          description: "successful operation"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserEntity"
+        "403":
+          $ref: '#/components/responses/Unauthorized'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalError'
   /project:
-    $ref: "swagger.yaml"
+    $ref: "./project/project.yaml"
     
+
 components:
   securitySchemes:
     bearerAuth:
@@ -92,14 +126,14 @@ components:
       scheme: bearer
       bearerFormat: JWT
       description: "Auth header (Authorization) Access Token"
-    # bearerAuthRefreshToken:
-    #   type: http
-    #   scheme: bearer
-    #   bearerFormat: JWT
-    #   description: "(Authorization) Refresh Token"
-    # basicAuth:   
-    #   type: http
-    #   scheme: basic
+    bearerAuthRefreshToken:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: "(Authorization) Refresh Token"
+    basicAuth:   
+      type: http
+      scheme: basic
   responses:
     NotFound:
       description: Not found
@@ -125,11 +159,11 @@ components:
       properties:
         error:
           type: string
-    # FileReturn:
-    #   type: "object"
-    #   properties:
-    #     image:
-    #       type: string
+    FileReturn:
+      type: "object"
+      properties:
+        image:
+          type: string
     Tokenization:
       type: "object"
       properties:
@@ -159,15 +193,6 @@ components:
             - "dev"
             - "manager"
             - "admin"
-
-    LoginEntity:
-      type: "object"
-      properties:
-        user_name:
-          type: string
-        password:
-          type: string
-
     ProjectEntity:
       type: "object"
       properties:
@@ -181,4 +206,5 @@ components:
           type: string
         active:
           type: boolean
+
 

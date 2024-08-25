@@ -4,7 +4,7 @@ version: 1.0.0
 repository: https://github.com/Francisperalta05/DartServer
 
 environment:
-  sdk: '>=3.4.4 <4.0.0'
+  sdk: '>=3.5.0 <4.0.0'
 
 # dart run build_runner build --delete-conflicting-outputs
 # Add regular dependencies here.

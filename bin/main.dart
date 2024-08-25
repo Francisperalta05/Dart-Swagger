@@ -27,23 +27,10 @@ void main(List<String> args) async {
   final path = args.isNotEmpty ? args[0] : 'specs/swagger.yaml';
   final handler = SwaggerUI(
     path,
-    title: 'Dart Swagger Test',
+    title: 'Swagger Monedero',
   );
 
   final server = await io.serve(handler.call, ip, port);
 
   log('Serving at http://${server.address.host}:${server.port}');
-
-  // setTimer();
 }
-
-// Timer? timer;
-
-// void setTimer() {
-//   timer?.cancel();
-//   timer = Timer.periodic(Duration(seconds: 1), (timer) {
-//     log(DateTime.now().millisecondsSinceEpoch.toString());
-
-//     // timer.cancel();
-//   });
-// }
